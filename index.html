@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#111111">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon.png">
+<title>信用卡助手</title>
+<style>
+body{
+font-family:-apple-system,BlinkMacSystemFont,sans-serif;
+background:#f2f2f7;
+padding:20px;
+}
+.card{
+background:white;
+border-radius:18px;
+padding:18px;
+margin-bottom:16px;
+box-shadow:0 2px 8px rgba(0,0,0,0.08);
+}
+input,select,button{
+width:100%;
+padding:14px;
+margin-top:10px;
+border-radius:12px;
+font-size:16px;
+box-sizing:border-box;
+}
+button{
+background:black;
+color:white;
+border:none;
+}
+.result{
+margin-top:16px;
+padding:16px;
+background:#fff8dc;
+border-radius:14px;
+}
+</style>
+</head>
+<body>
+
+<div class="card">
+<h1>💳 信用卡助手</h1>
+
+<input id="merchant" placeholder="輸入店家，例如 Uber Eats">
+
+<select id="country">
+<option>台灣</option>
+<option>日本</option>
+<option>海外</option>
+</select>
+
+<button onclick="go()">推薦刷卡</button>
+
+<div class="result" id="result">
+輸入後開始查詢
+</div>
+</div>
+
+<script>
+function go(){
+let m=document.getElementById('merchant').value.toLowerCase();
+let c=document.getElementById('country').value;
+let r='';
+
+if(c==='日本'){
+r='🥇 吉鶴卡<br>🥈 永豐大戶';
+}
+else if(m.includes('uber')||m.includes('foodpanda')){
+r='🥇 Cube 卡（童樂匯）<br>🥈 永豐大戶';
+}
+else if(m.includes('momo')||m.includes('蝦皮')){
+r='🥇 Cube / U Bear<br>🥈 永豐大戶';
+}
+else{
+r='🥇 永豐大戶';
+}
+
+document.getElementById('result').innerHTML=r;
+}
+
+if ('serviceWorker' in navigator) {
+navigator.serviceWorker.register('./service-worker.js');
+}
+</script>
+
+</body>
+</html>
